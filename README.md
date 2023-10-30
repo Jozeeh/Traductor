@@ -1,5 +1,10 @@
 # Traductor
 
+# Dependencias
+```
+npm install axios
+```
+
 ## Project setup
 ```
 npm install
