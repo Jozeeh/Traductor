@@ -3,22 +3,23 @@
         <v-row>
             <v-col cols="12">
                 <!-- CARD DE BIENVENIDA EN TRADUCTOR -->
-                <v-card color="indigo-lighten-1" theme="dark">
+                <v-card color="blue-grey-lighten-3" variant="flat" theme="dark">
                     <div class="d-flex flex-no-wrap justify-space-between">
                         <div>
-                            <v-card-title class="text-h5">
+                            <v-card-title class="text-h5 text-black">
                                 ¡PRUEBA NUESTRO NUEVO TRADUCTOR!
                             </v-card-title>
 
-                            <v-card-subtitle>Desarrollado por Dev Dreams</v-card-subtitle>
+                            <v-card-subtitle class="text-black">Desarrollado por Dev Dreams</v-card-subtitle>
 
-                            <p style="margin: 15px;">Nuestro traductor es una herramienta versátil que garantiza una
-                                comunicación fluida y precisa en múltiples idiomas. ¡Descubran la comodidad de traducir
-                                textos con facilidad y precisión! ¡No esperen más para experimentar su eficacia!</p>
+                            <p style="margin: 15px;" class="text-black">Nuestro traductor es una herramienta versátil que
+                                garantiza una comunicación fluida y precisa en múltiples idiomas. ¡Descubran la comodidad de
+                                traducir textos con facilidad y precisión! ¡No esperen más para experimentar su eficacia!
+                            </p>
                         </div>
 
                         <v-avatar class="ma-3" size="125" rounded="0">
-                            <v-img src="/1Logo-SinFondo.png"></v-img>
+                            <v-img src="/2-Logo-SinFondo.png"></v-img>
                         </v-avatar>
                     </div>
                 </v-card>
@@ -27,6 +28,7 @@
 
         <v-row>
             <v-col>
+                <label>Traducir desde:</label>
                 <select v-model="idiomaOrigen">
                     <option disabled selected value="">Traducir de...</option>
                     <option value="auto">Automatico</option>
@@ -37,6 +39,7 @@
             </v-col>
 
             <v-col>
+                <label>Traducción en:</label>
                 <select v-model="idiomaResultado">
                     <option disabled selected value="">Traducir a...</option>
                     <option v-for="(idioma, i) in listadoATraducir" :key="i" :value="idioma.code">
@@ -101,9 +104,37 @@
         </v-row>
 
         <v-row>
-            <v-btn style="margin: 0 auto;" color="warning" @click="traducir">
-                ¿Necesitas buscar sinonimos y antonimos?
+            <v-btn style="margin: 0 auto;" color="warning">
+                Registrate para obtener más beneficios!
             </v-btn>
+        </v-row>
+
+        <v-row>
+            <v-col cols="12">
+                <!-- CARD DE ANTONIMOS Y SINONIMOS -->
+                <v-card color="blue-grey-lighten-4" variant="flat" theme="dark">
+                    <v-card-title class="text-h5 text-black">
+                        ¡¿NECESITAS ANTONIMOS Y SINONIMOS?!
+                    </v-card-title>
+
+                    <v-card-subtitle class="text-black">¡No esperes más para experimentar la eficacia!</v-card-subtitle>
+
+                    <v-card-text class="text-black">
+                        Además de ofrecerte un genial traductor, también te ofrecemos un diccionario con sinonimos y
+                        antonimos para que puedas ampliar tu vocabulario y mejorar tu comunicación. ¡No esperes más para
+                        experimentar su eficacia! ¡Registrate para obtener más beneficios!
+                    </v-card-text>
+
+                    <v-card-actions>
+                        <v-btn variant="tonal" color="grey-darken-4">
+                            Ir al diccionario
+                        </v-btn>
+                        <v-btn variant="tonal" color="grey-darken-4">
+                            Buscar sinonimos y antonimos
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -124,8 +155,8 @@ export default {
             desactivarBtn: false,
             snackTextoCopiado: false,
             snackErrorTraduccion: false,
-            idiomaOrigen: '',
-            idiomaResultado: ''
+            idiomaOrigen: 'auto',
+            idiomaResultado: 'es'
         }
     },
     methods: {
@@ -218,5 +249,4 @@ select {
     border: 1px solid #ccc;
     /* padding: 5px; */
     text-align: center;
-}
-</style>
+}</style>
