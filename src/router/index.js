@@ -1,9 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import TraductorPage from '../views/traductor-views/TraductorPage.vue'
 
 const routes = [
   {
     path: '/',
+    redirect: '/traductor'
+  },
+  {
+    path: '/traductor',
+    component: TraductorPage
+  },
+  {
+    path: '/home',
     name: 'home',
     component: HomeView
   },
