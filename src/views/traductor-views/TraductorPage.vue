@@ -29,6 +29,7 @@
             <v-col>
                 <select v-model="idiomaOrigen">
                     <option disabled selected value="">Traducir de...</option>
+                    <option value="auto">Automatico</option>
                     <option v-for="(idioma, i) in listadoATraducir" :key="i" :value="idioma.code">
                         {{ idioma.name }}
                     </option>
