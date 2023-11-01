@@ -65,7 +65,8 @@
                 <v-card :loading="cargandoTraduccion">
                     <v-card-title>Texto traducido</v-card-title>
                     <v-card-text>
-                        <v-textarea outlined label="Texto traducido" rows="8" v-model="textoTraducido" readonly clearable ref="copiarTexto"></v-textarea>
+                        <v-textarea outlined label="Texto traducido" rows="8" v-model="textoTraducido" readonly clearable
+                            ref="copiarTexto"></v-textarea>
                         <v-btn color="" prepend-icon="mdi-content-copy" variant="plain" @click="copiarTexto"></v-btn>
                         <v-btn color="" prepend-icon="mdi-help-box" variant="plain">¿Necesitas ayuda?</v-btn>
                     </v-card-text>
@@ -73,12 +74,26 @@
                     <!-- SNACKBAR PARA MOSTRAR QUE EL TEXTO HA SIDO COPIADO -->
                     <v-snackbar v-model="snackTextoCopiado">
                         Texto copiado
-                        
+
                         <template v-slot:actions>
-                        <v-btn color="pink" variant="text" @click="snackTextoCopiado = false">
-                        cerrar
-                        </v-btn>
-                    </template>
+                            <v-btn color="pink" variant="text" @click="snackTextoCopiado = false">
+                                cerrar
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
+
+                    <!-- SNACKBAR PARA MOSTRAR ERROR -->
+                    <v-snackbar v-model="snackErrorTraduccion" vertical>
+                        <div class="text-subtitle-1 pb-2">¡Te falta ingresar datos!</div>
+
+                        <p>Revisa que hayas introducido "idioma a traducir", "idioma de resultado" y haber introducido un
+                            texto para traducir.</p>
+
+                        <template v-slot:actions>
+                            <v-btn color="indigo" variant="text" @click="snackbar = false">
+                                Cerrar
+                            </v-btn>
+                        </template>
                     </v-snackbar>
                 </v-card>
             </v-col>
@@ -107,8 +122,9 @@ export default {
             cargandoTraduccion: false,
             desactivarBtn: false,
             snackTextoCopiado: false,
-            idiomaOrigen: null,
-            idiomaResultado: null
+            snackErrorTraduccion: false,
+            idiomaOrigen: '',
+            idiomaResultado: ''
         }
     },
     methods: {
@@ -128,36 +144,46 @@ export default {
 
             // Ocultar el Snackbar después de unos segundos (por ejemplo, 3 segundos)
             setTimeout(() => {
-            this.snackTextoCopiado = false;
+                this.snackTextoCopiado = false;
             }, 3000); // 3000 milisegundos (3 segundos)
         },
         traducir() {
-            this.cargandoTraduccion = true
-            this.desactivarBtn = true
+            if (this.idiomaOrigen == '' || this.idiomaResultado == '' || this.textoATraducir == '') {
+                this.snackErrorTraduccion = true
 
-            const data = new URLSearchParams();
-            data.append('source_language', this.idiomaOrigen);
-            data.append('target_language', this.idiomaResultado);
-            data.append('text', this.textoATraducir);
+                // Ocultar el Snackbar después de unos segundos (por ejemplo, 3 segundos)
+                setTimeout(() => {
+                    this.snackErrorTraduccion = false;
+                }, 3000); // 3000 milisegundos (3 segundos)
 
-            axios.post('https://text-translator2.p.rapidapi.com/translate', data, {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded',
-                    'X-RapidAPI-Key': `${this.$store.state.apiKey}`,
-                    'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
-                },
-            })
-                .then(response => {
-                    this.cargandoTraduccion = false
-                    this.desactivarBtn = false
-                    this.textoTraducido = response.data.data.translatedText
+            } else {
+                this.cargandoTraduccion = true
+                this.desactivarBtn = true
 
+                const data = new URLSearchParams();
+                data.append('source_language', this.idiomaOrigen);
+                data.append('target_language', this.idiomaResultado);
+                data.append('text', this.textoATraducir);
+
+                axios.post('https://text-translator2.p.rapidapi.com/translate', data, {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                        'X-RapidAPI-Key': `${this.$store.state.apiKey}`,
+                        'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
+                    },
                 })
-                .catch(error => {
-                    this.cargandoTraduccion = false
-                    this.desactivarBtn = false
-                    console.log(error)
-                })
+                    .then(response => {
+                        this.cargandoTraduccion = false
+                        this.desactivarBtn = false
+                        this.textoTraducido = response.data.data.translatedText
+
+                    })
+                    .catch(error => {
+                        this.cargandoTraduccion = false
+                        this.desactivarBtn = false
+                        console.log(error)
+                    })
+            }
         },
         obtenerIdiomas() {
             axios.get('https://text-translator2.p.rapidapi.com/getLanguages', {
@@ -185,12 +211,11 @@ export default {
 
 <style scoped>
 select {
-    width: 90%;
+    width: 100%;
     height: 40px;
     border-radius: 5px;
     border: 1px solid #ccc;
     /* padding: 5px; */
-    margin: 0 auto;
     text-align: center;
 }
 </style>
