@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import RegistroPage from '../views/sesion-views/RegistroPage.vue'
 import HomeView from '../views/HomeView.vue'
 import TraductorPage from '../views/traductor-views/TraductorPage.vue'
 import AjustesPerfilPage from '../views/usuario-views/AjustesPerfilPage.vue'
@@ -9,13 +10,16 @@ const routes = [
     redirect: '/traductor'
   },
   {
-    path: '/traductor',
-    component: TraductorPage
+    path: '/registrarse',
+    component: RegistroPage
   },
   {
     path: '/home',
-    name: 'home',
     component: HomeView
+  },
+  {
+    path: '/traductor',
+    component: TraductorPage
   },
   {
     path: '/perfil/',

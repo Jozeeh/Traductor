@@ -58,7 +58,7 @@
         </v-card>
       </v-menu> -->
 
-      <!-- MENU DESPLEGABLE DE LA DERECHA -->
+      <!-- MENU DESPLEGABLE DE LA DERECHA DE LOS 3 PUNTOS -->
       <v-menu min-width="200px" rounded>
         <template v-slot:activator="{ props }">
           <v-btn v-bind="props">
@@ -103,6 +103,51 @@
                     {{ user.email }}
                   </p>
 
+                  <!-- /////////////////////////
+                  || SIN HABER INICIADO SESIÓN ||
+                  ///////////////////////// -->
+                  <v-divider class="my-3"></v-divider>
+                  <!-- DIALOGO DE INICIO DE SESION -->
+                  <v-dialog width="500">
+                    <template v-slot:activator="{ props }">
+                      <v-btn v-bind="props" rounded variant="text">
+                        Iniciar sesión
+                      </v-btn>
+                    </template>
+
+                    <template v-slot:default="{ isActive }">
+                      <v-card title="Iniciar sesión" prepend-icon="mdi-account">
+                        <v-card-text>
+                          <v-text-field label="Correo" outlined></v-text-field>
+                          <v-text-field type="password" label="Contraseña" outlined></v-text-field>
+                        </v-card-text>
+
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+
+                          <v-btn color="red" text="Cancelar" @click="isActive.value = false"></v-btn>
+                          <v-btn color="green" text="Iniciar sesión" @click="overlay = true"></v-btn>
+
+                          <!-- Dialog que se muestra al tratar de iniciar sesión -->
+                          <v-dialog v-model="overlay" fullscreen>
+                            <v-card class="align-center justify-center">
+                              <v-progress-circular color="primary" indeterminate :size="128"
+                                :width="12"></v-progress-circular>
+                              <h1>Iniciando sesión...</h1>
+                            </v-card>
+                          </v-dialog>
+                        </v-card-actions>
+                      </v-card>
+                    </template>
+                  </v-dialog>
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn rounded variant="text" to="/registrarse">
+                    Registrarse
+                  </v-btn>
+
+                  <!-- /////////////////////////
+                  || UNA VEZ INICIADO SESIÓN ||
+                  ///////////////////////// -->
                   <v-divider class="my-3"></v-divider>
                   <v-btn rounded variant="text" to="/perfil/ajustes">
                     Editar cuenta
@@ -118,31 +163,6 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-
-    <!-- <v-navigation-drawer permanent expand-on-hover rail>
-      <v-list>
-        <v-list-item prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg" title="Sandra Adams" subtitle="sandra_a88@gmailcom"></v-list-item>
-      </v-list>
-
-      <v-list>
-        <v-list-item prepend-icon="mdi-login" title="Iniciar Sesión" to="/login"></v-list-item>
-        <v-list-item prepend-icon="mdi-account-plus-outline" title="Registrarse" to="/register"></v-list-item>
-      </v-list>
-
-      <v-divider></v-divider>
-
-      <v-list>
-        <v-list-item prepend-icon="mdi-translate" title="Traductor" to="/traductor"></v-list-item>
-        <v-list-item prepend-icon="mdi-book" title="Diccionario" to="/"></v-list-item>
-        <v-list-item prepend-icon="mdi-star" title="Starred" to="/"></v-list-item>
-      </v-list>
-
-      <v-divider></v-divider>
-
-      <v-list>
-        <v-list-item prepend-icon="" title="Creado por DevDreams"></v-list-item>
-      </v-list>
-    </v-navigation-drawer> -->
 
     <v-main>
       <router-view />
@@ -163,6 +183,7 @@
         </div>
       </v-footer>
     </v-main>
+
   </v-app>
 </template>
 
@@ -173,6 +194,7 @@ export default {
 
   data() {
     return {
+      overlay: false,
       showNavMenu: false,
       user: {
         initials: 'JD',

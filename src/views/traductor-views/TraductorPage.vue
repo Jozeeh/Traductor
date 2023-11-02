@@ -1,27 +1,18 @@
 <template>
     <v-container fluid>
-        <v-row>
-            <v-col cols="12">
-                <!-- CARD DE BIENVENIDA EN TRADUCTOR -->
+        <!-- CARD DE BIENVENIDA EN TRADUCTOR -->
+        <v-row justify="center">
+            <v-col :cols="12" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
                 <v-card color="blue-grey-lighten-3" variant="flat" theme="dark">
-                    <div class="d-flex flex-no-wrap justify-space-between">
-                        <div>
-                            <v-card-title class="text-h5 text-black">
-                                ¡PRUEBA NUESTRO NUEVO TRADUCTOR!
-                            </v-card-title>
-
-                            <v-card-subtitle class="text-black">Desarrollado por Dev Dreams</v-card-subtitle>
-
-                            <p style="margin: 15px;" class="text-black">Nuestro traductor es una herramienta versátil que
-                                garantiza una comunicación fluida y precisa en múltiples idiomas. ¡Descubran la comodidad de
-                                traducir textos con facilidad y precisión! ¡No esperen más para experimentar su eficacia!
-                            </p>
+                    <template v-slot:text>
+                        <div class="text-h5 text-black">
+                            <v-avatar rounded="0" image="/2-Logo-SinFondo.png"></v-avatar> ¡PRUEBA NUESTRO NUEVO TRADUCTOR!
                         </div>
-
-                        <v-avatar class="ma-3" size="125" rounded="0">
-                            <v-img src="/2-Logo-SinFondo.png"></v-img>
-                        </v-avatar>
-                    </div>
+                        <div class="text-subtitle-2 text-grey-darken-3">Desarrollado por dev dreams</div>
+                        Nuestro traductor es una herramienta versátil que
+                        garantiza una comunicación fluida y precisa en múltiples idiomas. ¡Descubran la comodidad de
+                        traducir textos con facilidad y precisión! ¡No esperen más para experimentar su eficacia!
+                    </template>
                 </v-card>
             </v-col>
         </v-row>
@@ -109,30 +100,28 @@
             </v-btn>
         </v-row>
 
-        <v-row>
-            <v-col cols="12">
-                <!-- CARD DE ANTONIMOS Y SINONIMOS -->
+        <!-- CARD DE ANTONIMOS Y SINONIMOS -->
+        <v-row justify="center">
+            <v-col :cols="12" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
                 <v-card color="blue-grey-lighten-4" variant="flat" theme="dark">
-                    <v-card-title class="text-h5 text-black">
-                        ¡¿NECESITAS ANTONIMOS Y SINONIMOS?!
-                    </v-card-title>
-
-                    <v-card-subtitle class="text-black">¡No esperes más para experimentar la eficacia!</v-card-subtitle>
-
-                    <v-card-text class="text-black">
+                    <template v-slot:text>
+                        <div class="text-h5 text-black">
+                            <v-avatar rounded="0" image="/2-Logo-SinFondo.png"></v-avatar>
+                            ¡¿NECESITAS ANTONIMOS Y SINONIMOS?!
+                        </div>
+                        <div class="text-subtitle-2 text-grey-darken-3">¡No esperes más para experimentar la eficacia!</div>
                         Además de ofrecerte un genial traductor, también te ofrecemos un diccionario con sinonimos y
                         antonimos para que puedas ampliar tu vocabulario y mejorar tu comunicación. ¡No esperes más para
                         experimentar su eficacia! ¡Registrate para obtener más beneficios!
-                    </v-card-text>
 
-                    <v-card-actions>
-                        <v-btn variant="tonal" color="grey-darken-4">
+                        <br><br>
+                        <v-btn style="margin: 2px;" variant="tonal" color="grey-darken-4">
                             Ir al diccionario
                         </v-btn>
-                        <v-btn variant="tonal" color="grey-darken-4">
+                        <v-btn style="margin: 2px;" variant="tonal" color="grey-darken-4">
                             Buscar sinonimos y antonimos
                         </v-btn>
-                    </v-card-actions>
+                    </template>
                 </v-card>
             </v-col>
         </v-row>
@@ -249,4 +238,5 @@ select {
     border: 1px solid #ccc;
     /* padding: 5px; */
     text-align: center;
-}</style>
+}
+</style>
