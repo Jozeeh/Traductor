@@ -94,68 +94,44 @@
               <v-card-text>
                 <div class="mx-auto text-center">
 
-                  <v-avatar color="brown">
-                    <span class="text-h5">{{ user.initials }}</span>
-                  </v-avatar>
+                  <!-- /////////////////////////
+                  || UNA VEZ INICIADO SESIÓN ||
+                  ///////////////////////// -->
+                  <div v-if="this.$store.state.datosUsuario.length != 0">
+                    <v-avatar color="brown">
+                      <v-img src="../public/profile-pic.jpg"></v-img>
+                    </v-avatar>
 
-                  <h3>{{ user.fullName }}</h3>
-                  <p class="text-caption mt-1">
-                    {{ user.email }}
-                  </p>
+                    <h3>{{ this.$store.state.datosUsuario.nombre }} {{ this.$store.state.datosUsuario.apellido }}</h3>
+                    <p class="text-caption mt-1">
+                      {{ this.$store.state.datosUsuario.correo }}
+                    </p>
+                  </div>
+
+                  <div v-if="this.$store.state.datosUsuario.length != 0">
+                    <v-divider class="my-3"></v-divider>
+                    <v-btn rounded variant="text" to="/perfil/ajustes">
+                      Editar cuenta
+                    </v-btn>
+                    <v-divider class="my-3"></v-divider>
+                    <v-btn rounded variant="text" @click="cerrarSesion()">
+                      Cerrar sesión
+                    </v-btn>
+                  </div>
 
                   <!-- /////////////////////////
                   || SIN HABER INICIADO SESIÓN ||
                   ///////////////////////// -->
-                  <v-divider class="my-3"></v-divider>
-                  <!-- DIALOGO DE INICIO DE SESION -->
-                  <v-dialog width="500">
-                    <template v-slot:activator="{ props }">
-                      <v-btn v-bind="props" rounded variant="text">
-                        Iniciar sesión
-                      </v-btn>
-                    </template>
+                  <div v-else>
+                    <v-btn rounded variant="text" to="/login">
+                      Iniciar sesión
+                    </v-btn>
+                    <v-divider class="my-3"></v-divider>
+                    <v-btn rounded variant="text" to="/registrarse">
+                      Registrarse
+                    </v-btn>
+                  </div>
 
-                    <template v-slot:default="{ isActive }">
-                      <v-card title="Iniciar sesión" prepend-icon="mdi-account">
-                        <v-card-text>
-                          <v-text-field label="Correo" outlined></v-text-field>
-                          <v-text-field type="password" label="Contraseña" outlined></v-text-field>
-                        </v-card-text>
-
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-
-                          <v-btn color="red" text="Cancelar" @click="isActive.value = false"></v-btn>
-                          <v-btn color="green" text="Iniciar sesión" @click="overlay = true"></v-btn>
-
-                          <!-- Dialog que se muestra al tratar de iniciar sesión -->
-                          <v-dialog v-model="overlay" fullscreen>
-                            <v-card class="align-center justify-center">
-                              <v-progress-circular color="primary" indeterminate :size="128"
-                                :width="12"></v-progress-circular>
-                              <h1>Iniciando sesión...</h1>
-                            </v-card>
-                          </v-dialog>
-                        </v-card-actions>
-                      </v-card>
-                    </template>
-                  </v-dialog>
-                  <v-divider class="my-3"></v-divider>
-                  <v-btn rounded variant="text" to="/registrarse">
-                    Registrarse
-                  </v-btn>
-
-                  <!-- /////////////////////////
-                  || UNA VEZ INICIADO SESIÓN ||
-                  ///////////////////////// -->
-                  <v-divider class="my-3"></v-divider>
-                  <v-btn rounded variant="text" to="/perfil/ajustes">
-                    Editar cuenta
-                  </v-btn>
-                  <v-divider class="my-3"></v-divider>
-                  <v-btn rounded variant="text">
-                    Cerrar sesión
-                  </v-btn>
                 </div>
               </v-card-text>
             </v-card>
@@ -188,19 +164,39 @@
 </template>
 
 <script>
+// import axios from 'axios' //No se usa en este componente/views
 
 export default {
   name: 'App',
 
   data() {
     return {
-      overlay: false,
+      dialogCargandoSesion: false,
       showNavMenu: false,
-      user: {
-        initials: 'JD',
-        fullName: 'John Doe',
-        email: 'john.doe@doe.com',
-      },
+    }
+  },
+  methods: {
+    // Método para cerrar sesión
+    cerrarSesion() {
+      // Eliminamos los datos de la sesion del localStorage y del store, luego redirigimos
+      localStorage.removeItem('datosSesion')
+      this.$store.state.datosUsuario = []
+      this.$router.push('/traductor')
+    }
+  },
+  beforeCreate() {
+    // Cargar los datos de usuario desde el localStorage
+    const usuarioData = localStorage.getItem('datosSesion');
+
+    // Comprobamos si hay datos de sesion guardados en el store
+    if (usuarioData) {
+      // Cargamos los datos de la sesion en el store
+      this.$store.state.datosUsuario = JSON.parse(usuarioData);
+      // Imprimimos los datos de la sesion en consola
+      console.log('DATOS CARGADOS DESDE EL APP.VUE', this.$store.state.datosUsuario)
+    
+    } else {
+      console.log('Ups... al parecer no tienes una sesión iniciada, algunos complementos no estarán disponibles')
     }
   }
 }
