@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import LoginPage from '../views/sesion-views/LoginPage.vue'
 import RegistroPage from '../views/sesion-views/RegistroPage.vue'
 import HomeView from '../views/HomeView.vue'
 import TraductorPage from '../views/traductor-views/TraductorPage.vue'
@@ -8,6 +9,10 @@ const routes = [
   {
     path: '/',
     redirect: '/traductor'
+  },
+  {
+    path: '/login',
+    component: LoginPage
   },
   {
     path: '/registrarse',
