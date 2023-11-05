@@ -49,11 +49,11 @@
                 </v-col>
 
                 <v-col :cols="12" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6">
-                    <v-text-field label="Nombre" outlined></v-text-field>
-                    <v-text-field label="Apellido" outlined></v-text-field>
-                    <v-text-field type="number" label="Número telefonico" outlined></v-text-field>
+                    <v-text-field label="Nombre" outlined v-model="datosUsuario.nombre"></v-text-field>
+                    <v-text-field label="Apellido" outlined v-model="datosUsuario.apellido"></v-text-field>
+                    <v-text-field type="number" label="Número telefonico" outlined v-model="datosUsuario.telefono"></v-text-field>
                     <v-list-item-subtitle>Para cambiar el correo y contraseña por favor ve a la página de <a href="/">seguridad.</a></v-list-item-subtitle>
-                    <v-text-field label="Correo" outlined disabled></v-text-field>
+                    <v-text-field label="Correo" outlined disabled v-model="datosUsuario.correo"></v-text-field>
                     <v-text-field label="Contraseña" outlined disabled></v-text-field>
                     <v-text-field label="Confirmar contraseña" outlined disabled></v-text-field>
 
@@ -72,9 +72,18 @@ export default {
     name: 'AjustesPerfilPage',
     data() {
         return {
-
+          datosUsuario: this.$store.state.datosUsuario,
         }
-    }
+    },
+    beforeCreate() {
+      // Comprobamos si hay datos de sesion guardados en el store
+      if (this.$store.state.datosUsuario.length != 0) {
+        console.log('Sesión recuperada')
+        
+      } else {
+        this.$router.push('/login')
+      }
+    },
 }
 </script>
 
