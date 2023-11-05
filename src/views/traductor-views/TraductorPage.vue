@@ -2,8 +2,8 @@
     <v-container fluid>
         <!-- CARD DE BIENVENIDA EN TRADUCTOR -->
         <v-row justify="center">
-            <v-col :cols="12" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
-                <v-card color="blue-grey-lighten-3" variant="flat" theme="dark">
+            <v-col :cols="12" :sm="12" :md="10" :lg="10" :xl="10" :xxl="10">
+                <v-card color="blue-grey-lighten-4" variant="flat" theme="dark">
                     <template v-slot:text>
                         <div class="text-h5 text-black">
                             <v-avatar rounded="0" image="/2-Logo-SinFondo.png"></v-avatar> ¡PRUEBA NUESTRO NUEVO TRADUCTOR!
@@ -102,7 +102,7 @@
 
         <!-- CARD DE ANTONIMOS Y SINONIMOS -->
         <v-row justify="center">
-            <v-col :cols="12" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
+            <v-col :cols="12" :sm="12" :md="10" :lg="10" :xl="10" :xxl="10">
                 <v-card color="blue-grey-lighten-4" variant="flat" theme="dark">
                     <template v-slot:text>
                         <div class="text-h5 text-black">
@@ -222,6 +222,9 @@ export default {
                     console.log(error)
                 })
         }
+    },
+    beforeCreate() {
+        
     },
     mounted() {
         this.obtenerIdiomas()
