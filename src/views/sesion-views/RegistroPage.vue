@@ -85,7 +85,7 @@ export default {
     methods: {
         // Método para iniciar sesión despues de registrarse
         iniciarSesion(){
-            axios.post(`${this.$store.state.ipApi}/login`, {
+            axios.post(`${this.$store.state.ipApi}/api/login`, {
                 correo: this.cuentaRegistrar.correo,
                 password: this.cuentaRegistrar.password
             })
@@ -126,7 +126,7 @@ export default {
                     this.loadingRegistro = true
                     
                     // Se envía la petición al servidor
-                    axios.post(`${this.$store.state.ipApi}/registro`, this.cuentaRegistrar)
+                    axios.post(`${this.$store.state.ipApi}/api/registro`, this.cuentaRegistrar)
                     .then(response => {
                         //Mensaje y datos obtenido del registro exitoso
                         console.log('Registro exitoso' + response.data.data)

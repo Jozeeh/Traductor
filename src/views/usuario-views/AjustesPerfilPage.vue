@@ -1,12 +1,7 @@
 <template>
     <v-navigation-drawer permanent expand-on-hover rail>
       <v-list>
-        <v-list-item prepend-avatar="/profile-pic.jpg" title="Sandra Adams" subtitle="sandra_a88@gmailcom"></v-list-item>
-      </v-list>
-
-      <v-list>
-        <v-list-item prepend-icon="mdi-close-box" title="Cerrar Sesión" to="/login"></v-list-item>
-        <!-- <v-list-item prepend-icon="mdi-account-plus-outline" title="Registrarse" to="/register"></v-list-item> -->
+        <v-list-item prepend-avatar="/profile-pic.jpg" :title="this.$store.state.datosUsuario.nombre + ' ' + this.$store.state.datosUsuario.apellido" :subtitle="this.$store.state.datosUsuario.correo"></v-list-item>
       </v-list>
 
       <v-divider></v-divider>
@@ -44,7 +39,7 @@
 
             <v-row>
                 <v-col :cols="12" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6">
-                    <v-img style="margin: 0 auto;" :width="200" aspect-ratio="1/1" cover src="/profile-pic.jpg"></v-img> <br> 
+                    <v-img style="margin: 0 auto;" :width="200" aspect-ratio="1/1" cover :src="`${this.$store.state.ipApi}/`+datosUsuario.foto"></v-img> <br> 
                     <v-file-input :rules="rules" accept="image/png, image/jpeg, image/bmp" placeholder="Pick an avatar" prepend-icon="mdi-camera" label="Avatar" @change="handleFileChange"></v-file-input>
                 </v-col>
 
@@ -66,7 +61,7 @@
 
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
     name: 'AjustesPerfilPage',
@@ -90,15 +85,19 @@ export default {
         formData.append('telefono', this.datosUsuario.telefono);
         formData.append('foto', this.imagenSeleccionada);
 
-        // Realiza una solicitud POST o PUT para actualizar el perfil del usuario
-        // axios.post('/api/actualizar-perfil', formData)
-        // .then(response => {
-        //   // Maneja la respuesta del servidor
-        //   // Puedes mostrar un mensaje de éxito o redirigir al usuario a otra página
-        // })
-        // .catch(error => {
-        //   console.log(error)
-        // });
+        // Realiza una solicitud PUT para actualizar el perfil del usuario
+        axios.put(`${this.$store.state.ipApi}/api/updateDatosUsuario/${this.$store.state.datosUsuario.id}`, {
+          nombre: this.datosUsuario.nombre,
+          apellido: this.datosUsuario.apellido,
+          telefono: this.datosUsuario.telefono,
+          foto: this.imagenSeleccionada
+        })
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        });
 
       }
 

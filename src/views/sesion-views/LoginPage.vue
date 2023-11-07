@@ -92,7 +92,7 @@ export default {
             // Mostramos el dialog de cargando
             this.dialogCargandoSesion = true
 
-            axios.post(`${this.$store.state.ipApi}/login`, {
+            axios.post(`${this.$store.state.ipApi}/api/login`, {
                 correo: this.correoLogin,
                 password: this.passwordLogin
             })
