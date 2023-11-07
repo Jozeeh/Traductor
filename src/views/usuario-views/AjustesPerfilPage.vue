@@ -45,7 +45,7 @@
             <v-row>
                 <v-col :cols="12" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6">
                     <v-img style="margin: 0 auto;" :width="200" aspect-ratio="1/1" cover src="/profile-pic.jpg"></v-img> <br> 
-                    <v-file-input :rules="rules" accept="image/png, image/jpeg, image/bmp" placeholder="Pick an avatar" prepend-icon="mdi-camera" label="Avatar"></v-file-input>
+                    <v-file-input :rules="rules" accept="image/png, image/jpeg, image/bmp" placeholder="Pick an avatar" prepend-icon="mdi-camera" label="Avatar" @change="handleFileChange"></v-file-input>
                 </v-col>
 
                 <v-col :cols="12" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6">
@@ -57,7 +57,7 @@
                     <v-text-field label="Contraseña" outlined disabled></v-text-field>
                     <v-text-field label="Confirmar contraseña" outlined disabled></v-text-field>
 
-                    <v-btn color="lime" dark>Guardar cambios</v-btn>
+                    <v-btn color="lime" dark @click="guardarCambios()">Guardar cambios</v-btn>
                 </v-col>
             </v-row>
         </v-grid>
@@ -73,7 +73,35 @@ export default {
     data() {
         return {
           datosUsuario: this.$store.state.datosUsuario,
+          imagenSeleccionada: null,
         }
+    },
+    methods: {
+      handleFileChange(event) {
+        // Captura la imagen seleccionada
+        this.imagenSeleccionada = event.target.files[0];
+      },
+
+      guardarCambios() {
+        // Crea un objeto FormData para enviar la imagen al servidor
+        const formData = new FormData();
+        formData.append('nombre', this.datosUsuario.nombre);
+        formData.append('apellido', this.datosUsuario.apellido);
+        formData.append('telefono', this.datosUsuario.telefono);
+        formData.append('foto', this.imagenSeleccionada);
+
+        // Realiza una solicitud POST o PUT para actualizar el perfil del usuario
+        // axios.post('/api/actualizar-perfil', formData)
+        // .then(response => {
+        //   // Maneja la respuesta del servidor
+        //   // Puedes mostrar un mensaje de éxito o redirigir al usuario a otra página
+        // })
+        // .catch(error => {
+        //   console.log(error)
+        // });
+
+      }
+
     },
     beforeCreate() {
       // Comprobamos si hay datos de sesion guardados en el store

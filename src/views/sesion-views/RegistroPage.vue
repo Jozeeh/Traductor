@@ -72,6 +72,7 @@ export default {
                 telefono: '',
                 correo: '',
                 password: '',
+                tipo_usuario: 'Usuario'
             },
             passwordConfirm: '',
             loadingRegistro: false,
