@@ -99,7 +99,7 @@
                   ///////////////////////// -->
                   <div v-if="this.$store.state.datosUsuario.length != 0">
                     <v-avatar color="brown">
-                      <v-img src="../public/profile-pic.jpg"></v-img>
+                      <v-img :src="this.$store.state.fotoDecodificada"></v-img>
                     </v-avatar>
 
                     <h3>{{ this.$store.state.datosUsuario.nombre }} {{ this.$store.state.datosUsuario.apellido }}</h3>
@@ -192,6 +192,10 @@ export default {
     if (usuarioData) {
       // Cargamos los datos de la sesion en el store
       this.$store.state.datosUsuario = JSON.parse(usuarioData);
+
+      // Decodificamos la imagen de perfil del usuario
+      this.$store.state.fotoDecodificada = "data:image/png;base64," + this.$store.state.datosUsuario.foto;
+
       // Imprimimos los datos de la sesion en consola
       console.log('DATOS CARGADOS DESDE EL APP.VUE', this.$store.state.datosUsuario)
     

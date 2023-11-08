@@ -8,7 +8,7 @@ export default createStore({
     apiKey: '88cc51c7a8msh5cb26f3451f98aep13c7f7jsnd91cfddc6d9c',
 
     datosUsuario: [],
-    fotoUsuario: null
+    fotoDecodificada: null
 
   },
   getters: {

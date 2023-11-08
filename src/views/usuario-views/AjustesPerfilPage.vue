@@ -1,7 +1,7 @@
 <template>
     <v-navigation-drawer permanent expand-on-hover rail>
       <v-list>
-        <v-list-item prepend-avatar="/profile-pic.jpg" :title="this.$store.state.datosUsuario.nombre + ' ' + this.$store.state.datosUsuario.apellido" :subtitle="this.$store.state.datosUsuario.correo"></v-list-item>
+        <v-list-item :prepend-avatar="this.$store.state.fotoDecodificada" :title="this.$store.state.datosUsuario.nombre + ' ' + this.$store.state.datosUsuario.apellido" :subtitle="this.$store.state.datosUsuario.correo"></v-list-item>
       </v-list>
 
       <v-divider></v-divider>
@@ -40,7 +40,7 @@
             <v-row>
                 <v-col :cols="12" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6">
                   <!-- IMAGEN DEL USUARIO -->
-                    <v-img style="margin: 0 auto;" :width="200" aspect-ratio="1/1" cover :src="fotoUsuarioDecodificada"></v-img> <br> 
+                    <v-img style="margin: 0 auto;" :width="200" aspect-ratio="1/1" cover :src="this.$store.state.fotoDecodificada"></v-img> <br> 
                     <v-file-input placeholder="Pick an avatar" prepend-icon="mdi-camera" label="Avatar" @change="handleFileChange"></v-file-input>
                     
                 </v-col>
@@ -150,8 +150,8 @@ export default {
       }
     },
     created() {
-      this.fotoUsuarioDecodificada = "data:image/png;base64," + this.$store.state.datosUsuario.foto;
-      console.log(this.fotoUsuarioDecodificada); // Verifica la URL de la imagen decodificada
+      // this.fotoUsuarioDecodificada = "data:image/png;base64," + this.$store.state.datosUsuario.foto;
+      // console.log(this.fotoUsuarioDecodificada); // Verifica la URL de la imagen decodificada
     }
 }
 </script>
