@@ -39,8 +39,10 @@
 
             <v-row>
                 <v-col :cols="12" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6">
-                    <v-img style="margin: 0 auto;" :width="200" aspect-ratio="1/1" cover :src="`${this.$store.state.ipApi}/`+datosUsuario.foto"></v-img> <br> 
-                    <v-file-input :rules="rules" accept="image/png, image/jpeg, image/bmp" placeholder="Pick an avatar" prepend-icon="mdi-camera" label="Avatar" @change="handleFileChange"></v-file-input>
+                  <!-- IMAGEN DEL USUARIO -->
+                    <v-img style="margin: 0 auto;" :width="200" aspect-ratio="1/1" cover :src="fotoUsuarioDecodificada"></v-img> <br> 
+                    <v-file-input placeholder="Pick an avatar" prepend-icon="mdi-camera" label="Avatar" @change="handleFileChange"></v-file-input>
+                    
                 </v-col>
 
                 <v-col :cols="12" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6">
@@ -56,6 +58,25 @@
                 </v-col>
             </v-row>
         </v-grid>
+
+        <!-- DIALOGO DE CARGA CUANDO SE ACTUALIZA LOS DATOS -->
+        <v-dialog persistent v-model="dialogCargandoCambios" width="400">
+          <v-card class="align-center justify-center" style="padding: 30px;">
+            <v-progress-circular color="primary" indeterminate :size="128" :width="12"></v-progress-circular>
+                <h1 class="text-center" style="margin-top: 15px;">Actualizando datos...</h1>
+          </v-card>
+        </v-dialog>
+
+        <!-- SNACKBAR DE AVISO QUE SE ACTUALIZO LOS DATOS -->
+        <v-snackbar v-model="snackAviso">
+            Datos actualizados
+
+            <template v-slot:actions>
+                <v-btn color="pink" variant="text" @click="snackContraseñaDiferente = false">
+                    cerrar
+                </v-btn>
+            </template>
+        </v-snackbar>
     </v-container>
 </template>
 
@@ -69,21 +90,25 @@ export default {
         return {
           datosUsuario: this.$store.state.datosUsuario,
           imagenSeleccionada: null,
+          dialogCargandoCambios: false,
+          snackAviso: false,
+          fotoUsuarioDecodificada: ''
         }
     },
     methods: {
       handleFileChange(event) {
         // Captura la imagen seleccionada
-        this.imagenSeleccionada = event.target.files[0];
+        let file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          this.imagenSeleccionada = reader.result; // Guarda la imagen como ucadena base64
+        };
+        reader.readAsDataURL(file);
       },
 
       guardarCambios() {
-        // Crea un objeto FormData para enviar la imagen al servidor
-        const formData = new FormData();
-        formData.append('nombre', this.datosUsuario.nombre);
-        formData.append('apellido', this.datosUsuario.apellido);
-        formData.append('telefono', this.datosUsuario.telefono);
-        formData.append('foto', this.imagenSeleccionada);
+        this.dialogCargandoCambios = true
 
         // Realiza una solicitud PUT para actualizar el perfil del usuario
         axios.put(`${this.$store.state.ipApi}/api/updateDatosUsuario/${this.$store.state.datosUsuario.id}`, {
@@ -93,6 +118,19 @@ export default {
           foto: this.imagenSeleccionada
         })
         .then(response => {
+
+          // Actualiza los datos del usuario en el store y en el localStorage
+          axios.get(`${this.$store.state.ipApi}/api/getDatosUsuario/${this.$store.state.datosUsuario.id}`)
+          .then(response => {
+            this.$store.state.datosUsuario = response.data.data
+            localStorage.setItem('datosSesion', JSON.stringify(response.data.data))
+            this.dialogCargandoCambios = false
+
+            // Muestra el snackbar de aviso
+            this.snackAviso = true
+            // Recarga página con router
+            this.$router.go()
+          })
           console.log(response.data)
         })
         .catch(error => {
@@ -111,6 +149,10 @@ export default {
         this.$router.push('/login')
       }
     },
+    created() {
+      this.fotoUsuarioDecodificada = "data:image/png;base64," + this.$store.state.datosUsuario.foto;
+      console.log(this.fotoUsuarioDecodificada); // Verifica la URL de la imagen decodificada
+    }
 }
 </script>
 
