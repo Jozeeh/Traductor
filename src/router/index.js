@@ -4,6 +4,7 @@ import RegistroPage from '../views/sesion-views/RegistroPage.vue'
 import HomeView from '../views/HomeView.vue'
 import TraductorPage from '../views/traductor-views/TraductorPage.vue'
 import AjustesPerfilPage from '../views/usuario-views/AjustesPerfilPage.vue'
+import SeguridadPerfilPage from '../views/usuario-views/SeguridadPerfilPage.vue'
 
 const routes = [
   {
@@ -34,6 +35,11 @@ const routes = [
         path: 'ajustes',
         name: 'ajustes',
         component: AjustesPerfilPage
+      },
+      {
+        path: 'seguridad',
+        name: 'seguridad',
+        component: SeguridadPerfilPage
       },
     ]
   },

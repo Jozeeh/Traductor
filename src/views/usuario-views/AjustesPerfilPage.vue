@@ -8,8 +8,9 @@
 
       <!-- LISTA DE OPCIONES DE CUENTA -->
       <v-list>
-        <v-list-item prepend-icon="mdi-key" title="Gestionar seguridad" to="/traductor"></v-list-item>
-        <v-list-item prepend-icon="mdi-star" title="Gestionar favoritos" to="/"></v-list-item>
+        <v-list-item prepend-icon="mdi-cog" title="Gestionar cuenta" to="/perfil/ajustes"></v-list-item>
+        <v-list-item prepend-icon="mdi-key" title="Gestionar seguridad" to="/perfil/seguridad"></v-list-item>
+        <v-list-item prepend-icon="mdi-star" title="Gestionar favoritos" to="/perfil/favoritos"></v-list-item>
         <v-list-item prepend-icon="mdi-clock" title="Proximamente..." to="/"></v-list-item>
       </v-list>
 
@@ -72,7 +73,7 @@
             Datos actualizados
 
             <template v-slot:actions>
-                <v-btn color="pink" variant="text" @click="snackContraseñaDiferente = false">
+                <v-btn color="pink" variant="text" @click="snackAviso = false">
                     cerrar
                 </v-btn>
             </template>
