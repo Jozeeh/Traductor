@@ -102,6 +102,9 @@ export default {
                 
                 // Y obtenemos los datos de la sesion guardada en el localStorage
                 this.$store.state.datosUsuario = JSON.parse(localStorage.getItem('datosSesion'))
+
+                // Decodificamos la imagen de perfil del usuario
+                this.$store.state.fotoDecodificada = "data:image/png;base64," + this.$store.state.datosUsuario.foto;
                 
                 // Cerramos el dialog de cargando y redirigimos a la página de ajustes de perfil
                 this.dialogCargandoSesion = false
