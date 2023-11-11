@@ -111,7 +111,7 @@
                   <div v-if="this.$store.state.datosUsuario.length != 0">
                     <v-divider class="my-3"></v-divider>
                     <v-btn rounded variant="text" to="/perfil/ajustes">
-                      Editar cuenta
+                      Gestionar cuenta
                     </v-btn>
                     <v-divider class="my-3"></v-divider>
                     <v-btn rounded variant="text" @click="cerrarSesion()">
