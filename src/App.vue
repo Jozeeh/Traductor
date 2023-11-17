@@ -143,8 +143,10 @@
     <v-main>
       <router-view />
 
+      <br><br><br>
+
       <!-- FOOTER -->
-      <v-footer color="grey-darken-4" style="margin-top: 10px;"
+      <v-footer color="grey-darken-4" 
         class="bg-indigo-lighten-1 text-center d-flex flex-column">
         <div>
           <v-btn variant="text"><v-icon>mdi-facebook</v-icon></v-btn>
@@ -198,10 +200,19 @@ export default {
 
       // Imprimimos los datos de la sesion en consola
       console.log('DATOS CARGADOS DESDE EL APP.VUE', this.$store.state.datosUsuario)
-    
+
     } else {
       console.log('Ups... al parecer no tienes una sesión iniciada, algunos complementos no estarán disponibles')
     }
   }
 }
 </script>
+
+<style>
+.v-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-top: 10px;
+}
+</style>

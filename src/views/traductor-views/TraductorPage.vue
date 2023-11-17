@@ -115,7 +115,7 @@
                         experimentar su eficacia! ¡Registrate para obtener más beneficios!
 
                         <br><br>
-                        <v-btn style="margin: 2px;" variant="tonal" color="grey-darken-4">
+                        <v-btn style="margin: 2px;" variant="tonal" color="grey-darken-4" to="/diccionario">
                             Ir al diccionario
                         </v-btn>
                         <v-btn style="margin: 2px;" variant="tonal" color="grey-darken-4">
