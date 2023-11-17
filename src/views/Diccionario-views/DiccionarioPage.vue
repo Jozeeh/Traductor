@@ -1,6 +1,6 @@
 <template>
     <v-container fluid>
-
+        <v-alert v-model="alerta" type="success" title="Favoritos" text="¡Se ha guardado exitosamente!" closable></v-alert>
         <v-row>
             <v-col>
                 <h1>Buscar Definición</h1>
@@ -37,7 +37,7 @@
             <v-col>
                 <img v-if="cargando2" src="/mascota.gif" alt="Cargando..." class="imagen-cargando" style="margin: 0 auto;"
                     width="200">
-                <div v-if="definicion">
+                <div v-if="Object.keys(definicion).length > 0">
                     <v-card max-width="344" color="black" variant="tonal">
                         <v-card-item>
                             <div>
@@ -45,7 +45,7 @@
                                 <div class="text-h6 mb-1">
                                     {{ palabra }}
                                 </div>
-                                <div class="text-caption">{{ definicion }}</div>
+                                <div class="text-caption" v-for="(def, i) in definicion" :key="i"><b>{{ i + 1 }}: </b>{{ def }} <br></div>
                             </div>
                         </v-card-item>
                     </v-card>
@@ -63,12 +63,13 @@
                                     {{ palabra2 }}
                                 </div>
                                 <div v-if="Object.keys(sinonimoAntonimo).length > 0">
-                                    <div class="text-caption" v-for="(pa, i) in sinonimoAntonimo" :key="i">{{ pa }}</div>
+                                    <div class="text-caption" v-for="(pa, i) in sinonimoAntonimo" :key="i"><b>{{ i + 1 }}: </b>{{ pa }}</div>
                                 </div>
                                 <div v-else>
                                     <div class="text-caption">No se han encontrado datos</div>
                                 </div>
-                                <v-btn color="red" icon="mdi-heart"></v-btn>
+                                <v-btn v-if="btnFavorito == false" color="red" icon="mdi-heart"
+                                    @click="guardarFavoritos()"></v-btn>
                             </div>
                         </v-card-item>
                     </v-card>
@@ -86,7 +87,7 @@ export default {
     data() {
         return {
             palabra: '',
-            definicion: '',
+            definicion: {},
             palabraText: false,
             palabra2: '',
             tipo: '',
@@ -96,7 +97,9 @@ export default {
             boton2: true,
             sinonimo: false,
             cargando: false,
-            cargando2: false
+            cargando2: false,
+            alerta: false,
+            btnFavorito: false
         }
     },
     methods: {
@@ -179,6 +182,7 @@ export default {
                 this.palabraText2 = false
                 this.boton2 = true
                 this.sinonimo = false
+                this.btnFavorito = false
             } else {
                 this.palabra = ''
                 this.definicion = ''
@@ -213,30 +217,40 @@ export default {
                     }
                 };
                 const response = await axios.request(options);
-                const definicionIngles = response.data.definitions[0].definition;
+                // Asumiendo que response.data.definitions es un array de objetos
+                let definicionesIngles = response.data.definitions;
 
-                // Traducir la definición al español
-                data.append('source_language', 'en');
-                data.append('target_language', 'es');
-                data.append('text', definicionIngles);
-                const traduccionDefinicion = await axios.post('https://text-translator2.p.rapidapi.com/translate', data, {
-                    headers: {
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'X-RapidAPI-Key': `${this.$store.state.apiKey}`,
-                        'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
-                    },
-                });
-                const definicionEspanol = traduccionDefinicion.data.data.translatedText;
-                this.palabraText = true
-                this.boton = false
-                this.definicion = definicionEspanol
-                // Devolver la definición en español
-                return definicionEspanol;
+                // Extraer la propiedad 'definition' de cada objeto en el array
+                definicionesIngles = definicionesIngles.map(obj => obj.definition);
+
+                // Crear un array para almacenar las definiciones traducidas
+                let definicionesEspanol = await Promise.all(definicionesIngles.map(async definicionIngles => {
+                    // Traducir la definición al español
+                    data.append('source_language', 'en');
+                    data.append('target_language', 'es');
+                    data.append('text', definicionIngles);
+                    const traduccionDefinicion = await axios.post('https://text-translator2.p.rapidapi.com/translate', data, {
+                        headers: {
+                            'content-type': 'application/x-www-form-urlencoded',
+                            'X-RapidAPI-Key': `${this.$store.state.apiKey}`,
+                            'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
+                        },
+                    });
+                    return traduccionDefinicion.data.data.translatedText;
+                }));
+
+                this.palabraText = true;
+                this.boton = false;
+                this.definicion = definicionesEspanol;
+                console.log(definicionesEspanol)
+
+                // Devolver el array de definiciones en español
+                return definicionesEspanol;
 
             } catch (error) {
                 console.error(error);
             }
-            finally{
+            finally {
                 this.cargando2 = false
             }
         },
@@ -251,7 +265,7 @@ export default {
                 else if (this.tipo === 'Antonimos') {
                     tipo = 'antonyms'
                 }
-                
+
                 // Traducir la palabra al inglés
                 const data = new URLSearchParams();
                 data.append('source_language', 'es');
@@ -265,7 +279,7 @@ export default {
                     },
                 });
                 const palabraIngles = traduccion.data.data.translatedText;
-                
+
                 // Buscar los sinónimos y antónimos en inglés
                 const options = {
                     method: 'GET',
@@ -278,12 +292,12 @@ export default {
                 const response = await axios.request(options);
                 var sinonimosIngles = {};
 
-                if(tipo == 'synonyms'){
+                if (tipo == 'synonyms') {
                     sinonimosIngles = response.data.synonyms;
-                }else if(tipo == 'antonyms'){
+                } else if (tipo == 'antonyms') {
                     sinonimosIngles = response.data.antonyms;
                 }
-                
+
 
                 // Traducir los sinónimos al español
                 const sinonimosEspanol = await Promise.all(sinonimosIngles.map(async sinonimo => {
@@ -308,9 +322,23 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-            finally{
+            finally {
                 this.cargando = false
             }
+        },
+        guardarFavoritos() {
+            var favorito = {
+                Palabra: this.palabra2,
+                fkIdUsuario: this.$store.state.datosUsuario.id
+            }
+            console.log(favorito)
+            axios.post(`${this.$store.state.ipApi}/api/registrarPalabra`, favorito)
+                .then(response => {
+                    console.log(response)
+                    this.btnFavorito = true
+                    this.alerta = true
+                })
+                .catch(error => console.log(error))
         }
 
     }
