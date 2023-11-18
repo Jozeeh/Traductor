@@ -1,6 +1,20 @@
 <template>
     <v-container fluid>
         <v-alert v-model="alerta" type="success" title="Favoritos" text="¡Se ha guardado exitosamente!" closable></v-alert>
+        <v-row justify="center">
+            <v-col :cols="12" :sm="12" :md="10" :lg="10" :xl="10" :xxl="10">
+                <v-card color="blue-grey-lighten-4" variant="flat" theme="dark">
+                    <template v-slot:text>
+                        <div class="text-h5 text-black">
+                            <v-avatar rounded="0" image="/2-Logo-SinFondo.png"></v-avatar> ¡PRUEBA NUESTRO NUEVO DICCIONARIO!
+                        </div>
+                        <div class="text-subtitle-2 text-grey-darken-3">Desarrollado por dev dreams</div>
+                        Nuestro diccionario en línea te permite buscar palabras y obtener sus definiciones, sinónimos y antónimos. Es una herramienta muy útil para estudiantes, profesores y traductores.
+                    </template>
+                </v-card>
+            </v-col>
+        </v-row>
+
         <v-row>
             <v-col :cols="12" :xsm="12" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6">
                 <h1>Buscar Definición</h1>
@@ -220,7 +234,7 @@ export default {
                     const traduccionDefinicion = await axios.post('https://text-translator2.p.rapidapi.com/translate', data, {
                         headers: {
                             'content-type': 'application/x-www-form-urlencoded',
-                            'X-RapidAPI-Key': `${this.$store.state.apiKey}`,
+                            'X-RapidAPI-Key': `${this.$store.state.apiKeyTraductor}`,
                             'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
                         },
                     });
@@ -295,7 +309,7 @@ export default {
                     const traduccionSinonimo = await axios.post('https://text-translator2.p.rapidapi.com/translate', data, {
                         headers: {
                             'content-type': 'application/x-www-form-urlencoded',
-                            'X-RapidAPI-Key': `${this.$store.state.apiKey}`,
+                            'X-RapidAPI-Key': `${this.$store.state.apiKeyTraductor}`,
                             'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
                         },
                     });
