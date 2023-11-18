@@ -74,11 +74,11 @@
             <v-icon>mdi-translate</v-icon>
             Traductor
           </v-list-item>
-          <v-list-item>
+          <v-list-item to="/diccionario">
             <v-icon>mdi-book</v-icon>
             Diccionario
           </v-list-item>
-          <v-list-item>
+          <v-list-item to="/perfil/ajustes">
             <v-icon>mdi-star</v-icon>
             Antonimos/Sinonimos
           </v-list-item>

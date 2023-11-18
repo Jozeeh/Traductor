@@ -209,7 +209,7 @@ export default {
         obtenerIdiomas() {
             axios.get('https://text-translator2.p.rapidapi.com/getLanguages', {
                 headers: {
-                    'X-RapidAPI-Key': `${this.$store.state.apiKey}`,
+                    'X-RapidAPI-Key': `${this.$store.state.apiKeyTraductor}`,
                     'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
                 }
             })

@@ -11,7 +11,6 @@
         <v-list-item prepend-icon="mdi-cog" title="Gestionar cuenta" to="/perfil/ajustes"></v-list-item>
         <v-list-item prepend-icon="mdi-key" title="Gestionar seguridad" to="/perfil/seguridad"></v-list-item>
         <v-list-item prepend-icon="mdi-star" title="Gestionar favoritos" to="/perfil/favoritos"></v-list-item>
-        <v-list-item prepend-icon="mdi-clock" title="Proximamente..." to="/"></v-list-item>
       </v-list>
 
       <v-divider></v-divider>
@@ -19,7 +18,7 @@
         <!-- LISTA DE COSAS DE LA PAGINA -->
       <v-list>
         <v-list-item prepend-icon="mdi-google-translate" title="Traductor" to="/traductor"></v-list-item>
-        <v-list-item prepend-icon="mdi-book" title="Diccionario" to="/"></v-list-item>
+        <v-list-item prepend-icon="mdi-book" title="Diccionario" to="/diccionario"></v-list-item>
         <v-list-item prepend-icon="mdi-book-multiple" title="Sinonimos/Antonimos" to="/"></v-list-item>
       </v-list>
 
@@ -50,7 +49,7 @@
                     <v-text-field label="Nombre" outlined v-model="datosUsuario.nombre"></v-text-field>
                     <v-text-field label="Apellido" outlined v-model="datosUsuario.apellido"></v-text-field>
                     <v-text-field type="number" label="Número telefonico" outlined v-model="datosUsuario.telefono"></v-text-field>
-                    <v-list-item-subtitle>Para cambiar el correo y contraseña por favor ve a la página de <a href="/">seguridad.</a></v-list-item-subtitle>
+                    <v-list-item-subtitle>Para cambiar el correo y contraseña por favor ve a la página de <a to="/perfil/seguridad">seguridad.</a></v-list-item-subtitle>
                     <v-text-field label="Correo" outlined disabled v-model="datosUsuario.correo"></v-text-field>
                     <v-text-field label="Contraseña" outlined disabled></v-text-field>
                     <v-text-field label="Confirmar contraseña" outlined disabled></v-text-field>
