@@ -189,7 +189,7 @@ export default {
                 axios.post('https://text-translator2.p.rapidapi.com/translate', data, {
                     headers: {
                         'content-type': 'application/x-www-form-urlencoded',
-                        'X-RapidAPI-Key': `${this.$store.state.apiKey}`,
+                        'X-RapidAPI-Key': `${this.$store.state.apiKeyTraductor}`,
                         'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
                     },
                 })

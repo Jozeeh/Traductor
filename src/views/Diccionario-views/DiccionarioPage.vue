@@ -2,7 +2,7 @@
     <v-container fluid>
         <v-alert v-model="alerta" type="success" title="Favoritos" text="¡Se ha guardado exitosamente!" closable></v-alert>
         <v-row>
-            <v-col>
+            <v-col :cols="12" :xsm="12" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6">
                 <h1>Buscar Definición</h1>
                 <v-layout row>
                     <v-text-field label="Palabra" type="text" prepend-icon="mdi-book-search" required id="palabra"
@@ -11,30 +11,7 @@
                         @click="buscarYTraducirDefinicion()"></v-btn>
                     <v-btn v-if="boton == false" class="ma-2" color="red" icon="mdi-delete" @click="limpiar(2)"></v-btn>
                 </v-layout>
-                <!-- <v-col style="width: 200px;">
-                    <v-text-field label="Palabra" type="text" prepend-icon="mdi-book-search" required id="palabra"
-                        v-model="palabra" :disabled="palabraText"></v-text-field>
-                </v-col>
-                <v-col>
-                    <v-btn class="ma-2" color="indigo" icon="mdi-book-search" @click="buscarDefinicion()"></v-btn>
-                </v-col> -->
-            </v-col>
-
-            <v-col>
-                <h1>Buscar Sinonimos o antonimos</h1>
-                <v-layout row>
-                    <v-text-field label="Palabra" type="text" prepend-icon="mdi-book-search" required id="palabra"
-                        v-model="palabra2" :disabled="palabraText2"></v-text-field>
-                    <v-select label="Seleccione" :items="['Sinonimos', 'Antonimos']" :disabled="palabraText2"
-                        v-model="tipo"></v-select>
-                    <v-btn v-if="boton2 == true" class="ma-2" color="indigo" icon="mdi-book-search"
-                        @click="buscarYTraducirSinonimosAntonimos()"></v-btn>
-                    <v-btn v-if="boton2 == false" class="ma-2" color="red" icon="mdi-delete" @click="limpiar(1)"></v-btn>
-                </v-layout>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col>
+                
                 <img v-if="cargando2" src="/mascota.gif" alt="Cargando..." class="imagen-cargando" style="margin: 0 auto;"
                     width="200">
                 <div v-if="Object.keys(definicion).length > 0">
@@ -52,7 +29,19 @@
 
                 </div>
             </v-col>
-            <v-col>
+
+            <v-col :cols="12" :xsm="12" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6">
+                <h1>Buscar Sinonimos o antonimos</h1>
+                <v-layout row>
+                    <v-text-field label="Palabra" type="text" prepend-icon="mdi-book-search" required id="palabra"
+                        v-model="palabra2" :disabled="palabraText2"></v-text-field>
+                    <v-select label="Seleccione" :items="['Sinonimos', 'Antonimos']" :disabled="palabraText2"
+                        v-model="tipo"></v-select>
+                    <v-btn v-if="boton2 == true" class="ma-2" color="indigo" icon="mdi-book-search"
+                        @click="buscarYTraducirSinonimosAntonimos()"></v-btn>
+                    <v-btn v-if="boton2 == false" class="ma-2" color="red" icon="mdi-delete" @click="limpiar(1)"></v-btn>
+                </v-layout>
+
                 <img v-if="cargando" src="/mascota.gif" alt="Cargando..." class="imagen-cargando" width="200">
                 <div v-if="sinonimo == true">
                     <v-card max-width="344" color="black" variant="tonal">
@@ -76,7 +65,6 @@
 
                 </div>
             </v-col>
-
         </v-row>
     </v-container>
 </template>
@@ -201,7 +189,7 @@ export default {
                 const traduccion = await axios.post('https://text-translator2.p.rapidapi.com/translate', data, {
                     headers: {
                         'content-type': 'application/x-www-form-urlencoded',
-                        'X-RapidAPI-Key': `${this.$store.state.apiKey}`,
+                        'X-RapidAPI-Key': `${this.$store.state.apiKeyTraductor}`,
                         'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
                     },
                 });
@@ -274,7 +262,7 @@ export default {
                 const traduccion = await axios.post('https://text-translator2.p.rapidapi.com/translate', data, {
                     headers: {
                         'content-type': 'application/x-www-form-urlencoded',
-                        'X-RapidAPI-Key': `${this.$store.state.apiKey}`,
+                        'X-RapidAPI-Key': `${this.$store.state.apiKeyTraductor}`,
                         'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
                     },
                 });
