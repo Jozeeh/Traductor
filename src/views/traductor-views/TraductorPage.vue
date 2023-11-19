@@ -94,8 +94,8 @@
             </v-col>
         </v-row>
 
-        <v-row>
-            <v-btn style="margin: 0 auto;" color="warning">
+        <v-row v-if="Object.keys(this.$store.state.datosUsuario).length == 0">
+            <v-btn style="margin: 0 auto;" color="warning" to="/login">
                 Registrate para obtener más beneficios!
             </v-btn>
         </v-row>
@@ -118,7 +118,7 @@
                         <v-btn style="margin: 2px;" variant="tonal" color="grey-darken-4" to="/diccionario">
                             Ir al diccionario
                         </v-btn>
-                        <v-btn style="margin: 2px;" variant="tonal" color="grey-darken-4">
+                        <v-btn style="margin: 2px;" variant="tonal" color="grey-darken-4" to="/favoritos">
                             Buscar sinonimos y antonimos
                         </v-btn>
                     </template>

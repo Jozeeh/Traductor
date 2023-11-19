@@ -84,6 +84,7 @@
 </template>
 
 <script>
+
 import axios from 'axios'
 export default {
     data() {
@@ -343,6 +344,13 @@ export default {
                 .catch(error => console.log(error))
         }
 
+    },
+    mounted(){
+        if(Object.keys(this.$store.state.datosUsuario).length != 0){
+            console.log('autorizado')
+        }else if(Object.keys(this.$store.state.datosUsuario).length == 0){
+            this.$router.push('/home')
+        }
     }
 }
 </script>

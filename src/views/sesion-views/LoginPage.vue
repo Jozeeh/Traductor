@@ -110,7 +110,7 @@ export default {
                 this.dialogCargandoSesion = false
 
                 // Redireccionamos
-                this.$router.push('/perfil/ajustes')
+                this.$router.push('/home')
 
                 console.log(response.data.data)
             })

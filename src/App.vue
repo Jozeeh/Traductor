@@ -59,7 +59,7 @@
       </v-menu> -->
 
       <!-- MENU DESPLEGABLE DE LA DERECHA DE LOS 3 PUNTOS -->
-      <v-menu min-width="200px" rounded>
+      <v-menu min-width="200px" rounded v-if="Object.keys(this.$store.state.datosUsuario).length != 0">
         <template v-slot:activator="{ props }">
           <v-btn v-bind="props">
             <v-icon>mdi-dots-vertical</v-icon>

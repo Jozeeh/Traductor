@@ -153,6 +153,7 @@ export default {
       // this.fotoUsuarioDecodificada = "data:image/png;base64," + this.$store.state.datosUsuario.foto;
       // console.log(this.fotoUsuarioDecodificada); // Verifica la URL de la imagen decodificada
     }
+
 }
 </script>
 
