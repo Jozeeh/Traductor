@@ -19,7 +19,6 @@
       <v-list>
         <v-list-item prepend-icon="mdi-google-translate" title="Traductor" to="/traductor"></v-list-item>
         <v-list-item prepend-icon="mdi-book" title="Diccionario" to="/diccionario"></v-list-item>
-        <v-list-item prepend-icon="mdi-book-multiple" title="Sinonimos/Antonimos" to="/"></v-list-item>
       </v-list>
 
       <v-divider></v-divider>

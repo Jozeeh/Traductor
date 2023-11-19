@@ -118,8 +118,8 @@
                         <v-btn style="margin: 2px;" variant="tonal" color="grey-darken-4" to="/diccionario">
                             Ir al diccionario
                         </v-btn>
-                        <v-btn style="margin: 2px;" variant="tonal" color="grey-darken-4" to="/favoritos">
-                            Buscar sinonimos y antonimos
+                        <v-btn style="margin: 2px;" variant="tonal" color="grey-darken-4" to="/perfil/favoritos">
+                            Ver mis favoritos
                         </v-btn>
                     </template>
                 </v-card>

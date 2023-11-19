@@ -5,8 +5,8 @@ import HomeView from '../views/HomeView.vue'
 import TraductorPage from '../views/traductor-views/TraductorPage.vue'
 import AjustesPerfilPage from '../views/usuario-views/AjustesPerfilPage.vue'
 import SeguridadPerfilPage from '../views/usuario-views/SeguridadPerfilPage.vue'
-import DiccionarioPage from '../views/Diccionario-views/DiccionarioPage.vue'
-import FavoritoPage from '../views/Diccionario-views/FavoritoPage.vue'
+import DiccionarioPage from '../views/diccionario-views/DiccionarioPage.vue'
+import FavoritoPage from '../views/diccionario-views/FavoritoPage.vue'
 
 const routes = [
   {
@@ -43,17 +43,17 @@ const routes = [
         name: 'seguridad',
         component: SeguridadPerfilPage
       },
+      {
+        path: 'favoritos',
+        name: 'favoritos',
+        component: FavoritoPage
+      },
     ]
   },
   {
     path: '/diccionario',
     name: 'diccionario',
     component: DiccionarioPage
-  },
-  {
-    path: '/favoritos',
-    name: 'favoritos',
-    component: FavoritoPage
   },
   {
     path: '/about',

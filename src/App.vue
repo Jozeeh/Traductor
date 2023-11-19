@@ -78,10 +78,6 @@
             <v-icon>mdi-book</v-icon>
             Diccionario
           </v-list-item>
-          <v-list-item to="/perfil/ajustes">
-            <v-icon>mdi-star</v-icon>
-            Antonimos/Sinonimos
-          </v-list-item>
           <v-menu min-width="200px" rounded>
             <template v-slot:activator="{ props }">
               <v-list-item v-bind="props">
