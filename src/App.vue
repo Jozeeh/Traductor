@@ -138,6 +138,17 @@
           </v-menu>
         </v-list>
       </v-menu>
+
+      <div v-else>
+        <v-btn to="/login">
+        <v-icon>mdi-circle</v-icon>
+        Iniciar sesión
+        </v-btn>
+        <v-btn to="/registrarse">
+          <v-icon>mdi-book</v-icon>
+          Registrarse
+        </v-btn>
+      </div>
     </v-app-bar>
 
     <v-main>

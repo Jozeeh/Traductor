@@ -52,7 +52,7 @@
         <v-dialog v-model="dialogCargandoRegistro" fullscreen>
             <v-card class="align-center justify-center">
                 <v-progress-circular color="primary" indeterminate :size="128" :width="12"></v-progress-circular>
-                <h1>Iniciando sesión...</h1>
+                <h1>Cargando registro...</h1>
             </v-card>
         </v-dialog>
     </v-grid>
@@ -100,6 +100,7 @@ export default {
 
         // Método para registrar una cuenta
         registrarCuenta() {
+            this.snackAviso = false
             // Mostrar el dialog de cargando registro
             this.dialogCargandoRegistro = true
 
@@ -132,14 +133,19 @@ export default {
                         console.log('Registro exitoso' + response.data.data)
                         
                         // Si el registro es exitoso se inicia sesión
-                        this.iniciarSesion()
+                        // this.iniciarSesion()
 
                         // Ocultamos el loading y el dialog
+                        this.desactivarFormulario = false
+                        this.loadingRegistro = false
                         this.dialogCargandoRegistro = false
                     })
                     .catch(error => {
+                        this.desactivarFormulario = false
+                        this.loadingRegistro = false
+                        this.dialogCargandoRegistro = false
                         // Texto del Snackbar
-                        this.snackAvisoTexto = 'Ya existe una cuenta con esté correo!'
+                        this.snackAvisoTexto = 'Oops... No se pudo registrar la cuenta!'
                         // Mostrar el Snackbar
                         this.snackAviso = true
 
@@ -156,6 +162,7 @@ export default {
             } 
             // Si todos los campos NO están llenos se ejecuta
             else{
+                this.dialogCargandoRegistro = false
                 // Texto del Snackbar
                 this.snackAvisoTexto = '¡Debes llenar todos los campos!'
                 // Mostrar el Snackbar

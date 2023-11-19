@@ -41,12 +41,23 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            favoritos: {}
+            favoritos: {},
+            config: {}
         };
     },
     methods: {
+        async getToken() {
+            let token = localStorage.getItem('token')
+            this.config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+
+            this.getFavoritos()
+        },
         getFavoritos() {
-            axios.get(`${this.$store.state.ipApi}/api/mostrarPalabra`)
+            axios.get(`${this.$store.state.ipApi}/api/mostrarPalabra`, this.config)
                 .then(response => {
                     this.favoritos = response.data
                     console.log(response.data)
@@ -56,7 +67,7 @@ export default {
                 )
         },
         eliminarFavorito(id) {
-            axios.delete(`${this.$store.state.ipApi}/api/eliminarFavorito/${id}`)
+            axios.delete(`${this.$store.state.ipApi}/api/eliminarFavorito/${id}`, this.config)
                 .then(response => {
                     console.log(response.data)
                     this.favoritos = {}
@@ -66,7 +77,7 @@ export default {
         }
     },
     created() {
-        this.getFavoritos()
+        this.getToken()
     },
     mounted(){
         if(Object.keys(this.$store.state.datosUsuario).length != 0){
@@ -74,6 +85,9 @@ export default {
         }else if(Object.keys(this.$store.state.datosUsuario).length == 0){
             this.$router.push('/home')
         }
+    },
+    ionViewDidEnter() {
+        // this.getToken()
     }
 };
 </script>

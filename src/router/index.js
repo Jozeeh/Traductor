@@ -15,11 +15,27 @@ const routes = [
   },
   {
     path: '/login',
-    component: LoginPage
+    component: LoginPage,
+    beforeEnter: async (to, from, next) => {
+      let respuesta = await validarAcceso();
+      if (respuesta){
+        next('/traductor') // Redirecciona a una ruta si tenemos sesión
+      } else{
+        next() // Dejamos acceder al login si no hay sesión
+      }
+    }
   },
   {
     path: '/registrarse',
-    component: RegistroPage
+    component: RegistroPage,
+    beforeEnter: async (to, from, next) => {
+      let respuesta = await validarAcceso();
+      if (respuesta){
+        next('/traductor') // Redirecciona a una ruta si tenemos sesión
+      } else{
+        next() // Dejamos acceder al login si no hay sesión
+      }
+    }
   },
   {
     path: '/home',
@@ -36,17 +52,41 @@ const routes = [
       {
         path: 'ajustes',
         name: 'ajustes',
-        component: AjustesPerfilPage
+        component: AjustesPerfilPage,
+        beforeEnter: async (to, from, next) => {
+          let respuesta = await validarAcceso();
+          if (respuesta){
+            next('/login') // Redirecciona a una ruta si tenemos sesión
+          } else{
+            next() // Dejamos acceder al login si no hay sesión
+          }
+        }
       },
       {
         path: 'seguridad',
         name: 'seguridad',
-        component: SeguridadPerfilPage
+        component: SeguridadPerfilPage,
+        beforeEnter: async (to, from, next) => {
+          let respuesta = await validarAcceso();
+          if (respuesta){
+            next('/login') // Redirecciona a una ruta si tenemos sesión
+          } else{
+            next() // Dejamos acceder al login si no hay sesión
+          }
+        }
       },
       {
         path: 'favoritos',
         name: 'favoritos',
-        component: FavoritoPage
+        component: FavoritoPage,
+        beforeEnter: async (to, from, next) => {
+          let respuesta = await validarAcceso();
+          if (respuesta){
+            next('/login') // Redirecciona a una ruta si tenemos sesión
+          } else{
+            next() // Dejamos acceder al login si no hay sesión
+          }
+        }
       },
     ]
   },
@@ -64,6 +104,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/AboutView.vue')
   }
 ]
+
+async function validarAcceso() {
+  let user = localStorage.getItem('user');
+
+  return (user)? true : false;
+}
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

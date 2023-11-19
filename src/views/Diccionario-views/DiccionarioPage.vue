@@ -102,10 +102,20 @@ export default {
             cargando: false,
             cargando2: false,
             alerta: false,
-            btnFavorito: false
+            btnFavorito: false,
+            config: {}
         }
     },
     methods: {
+        async getToken() {
+            let token = localStorage.getItem('token')
+            this.config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+        },
+
         async buscarDefinicion() {
             const options = {
                 method: 'GET',
@@ -335,7 +345,7 @@ export default {
                 fkIdUsuario: this.$store.state.datosUsuario.id
             }
             console.log(favorito)
-            axios.post(`${this.$store.state.ipApi}/api/registrarPalabra`, favorito)
+            axios.post(`${this.$store.state.ipApi}/api/registrarPalabra`, favorito, this.config)
                 .then(response => {
                     console.log(response)
                     this.btnFavorito = true
@@ -345,12 +355,18 @@ export default {
         }
 
     },
+    created() {
+        this.getToken()
+    },
     mounted(){
         if(Object.keys(this.$store.state.datosUsuario).length != 0){
             console.log('autorizado')
         }else if(Object.keys(this.$store.state.datosUsuario).length == 0){
             this.$router.push('/home')
         }
+    },
+    ionViewDidEnter() {
+        // this.getToken()
     }
 }
 </script>

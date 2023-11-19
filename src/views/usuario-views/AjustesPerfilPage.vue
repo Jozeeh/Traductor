@@ -91,7 +91,8 @@ export default {
           imagenSeleccionada: null,
           dialogCargandoCambios: false,
           snackAviso: false,
-          fotoUsuarioDecodificada: ''
+          fotoUsuarioDecodificada: '',
+          config: {}
         }
     },
     methods: {
@@ -105,6 +106,14 @@ export default {
         };
         reader.readAsDataURL(file);
       },
+      async getToken() {
+        let token = localStorage.getItem('token')
+        this.config = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }
+      },
 
       guardarCambios() {
         this.dialogCargandoCambios = true
@@ -115,11 +124,11 @@ export default {
           apellido: this.datosUsuario.apellido,
           telefono: this.datosUsuario.telefono,
           foto: this.imagenSeleccionada
-        })
+        }, this.config)
         .then(response => {
 
           // Actualiza los datos del usuario en el store y en el localStorage
-          axios.get(`${this.$store.state.ipApi}/api/getDatosUsuario/${this.$store.state.datosUsuario.id}`)
+          axios.get(`${this.$store.state.ipApi}/api/getDatosUsuario/${this.$store.state.datosUsuario.id}`, this.config)
           .then(response => {
             this.$store.state.datosUsuario = response.data.data
             localStorage.setItem('datosSesion', JSON.stringify(response.data.data))
@@ -149,6 +158,7 @@ export default {
       }
     },
     created() {
+      this.getToken()
       // this.fotoUsuarioDecodificada = "data:image/png;base64," + this.$store.state.datosUsuario.foto;
       // console.log(this.fotoUsuarioDecodificada); // Verifica la URL de la imagen decodificada
     }

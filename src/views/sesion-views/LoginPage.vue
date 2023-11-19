@@ -99,6 +99,7 @@ export default {
             .then(response => {
                 // Guardamos los datos de la sesion en el localStorage
                 localStorage.setItem('datosSesion', JSON.stringify(response.data.data))
+                localStorage.setItem('token', response.data.token)
                 
                 // Y obtenemos los datos de la sesion guardada en el localStorage
                 this.$store.state.datosUsuario = JSON.parse(localStorage.getItem('datosSesion'))
@@ -126,6 +127,10 @@ export default {
                 console.log(error)
             })
         },
+        getToken() {
+            // Obtenemos el token de localStorage
+            return localStorage.getItem('token')
+        }
     },
     beforeCreate() {
         // Comprobamos si hay datos de sesion guardados en el store
@@ -134,6 +139,7 @@ export default {
         } else {
             console.log('Inicia sesión!')
         }
-    }
+    },
+    
 }
 </script>

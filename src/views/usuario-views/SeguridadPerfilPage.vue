@@ -97,6 +97,14 @@ export default {
         }
     },
     methods: {
+        async getToken() {
+            let token = localStorage.getItem('token')
+            this.config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+        },
         guardarCorreo() {
             this.desactivarBotones = true
 
@@ -107,11 +115,11 @@ export default {
 
                 axios.put(`${this.$store.state.ipApi}/api/updateCorreoUsuario/${this.$store.state.datosUsuario.id}`, {
                     correo: this.correoNuevo
-                })
+                }, this.config)
                 .then(response => {
 
                      // Actualiza los datos del usuario en el store y en el localStorage
-                    axios.get(`${this.$store.state.ipApi}/api/getDatosUsuario/${this.$store.state.datosUsuario.id}`)
+                    axios.get(`${this.$store.state.ipApi}/api/getDatosUsuario/${this.$store.state.datosUsuario.id}`, this.config)
                     .then(response => {
                         this.$store.state.datosUsuario = response.data.data
                         localStorage.setItem('datosSesion', JSON.stringify(response.data.data))
@@ -182,6 +190,9 @@ export default {
                 this.desactivarBotones = false
             }
         }
+    },
+    created() {
+        this.getToken()
     }
 }
 </script>
