@@ -78,6 +78,10 @@
             <v-icon>mdi-book</v-icon>
             Diccionario
           </v-list-item>
+          <v-list-item to="/perfil/favoritos">
+            <v-icon>mdi-star</v-icon>
+            Favoritos
+          </v-list-item>
           <v-menu min-width="200px" rounded>
             <template v-slot:activator="{ props }">
               <v-list-item v-bind="props">
