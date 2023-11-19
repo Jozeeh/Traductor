@@ -51,6 +51,12 @@
         </ul>
       </div>
     </div>
+
+    <v-row v-if="Object.keys(this.$store.state.datosUsuario).length == 0">
+            <v-btn style="margin: 0 auto;" color="warning" to="/login">
+                Registrate para obtener más beneficios!
+            </v-btn>
+        </v-row>
   </div>
 </template>
 

@@ -11,7 +11,7 @@ import FavoritoPage from '../views/Diccionario-views/FavoritoPage.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/traductor'
+    redirect: '/home'
   },
   {
     path: '/login',
